@@ -1,11 +1,13 @@
 import React from "react";
-import Header from "./components/header/Header";
+import Header from "./components/header";
+import Todos from "./components/todos";
 
 const App = () => {
   return (
-    <div className="max-w-2xl w-full m-auto px-5">
+    <main className="max-w-2xl w-full m-auto px-5">
       <Header />
-    </div>
+      <Todos />
+    </main>
   );
 };
 
