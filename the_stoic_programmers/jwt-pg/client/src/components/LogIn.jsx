@@ -1,9 +1,16 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
 
-const LogIn = () => {
+const LogIn = ({ setAuth, isAuthenticated }) => {
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" />;
+  }
   return (
     <>
-      <h1>Login</h1>
+      <h2>Hello</h2>
+      <button onClick={() => setAuth(true)} className="bg-red-500">
+        Authenticate
+      </button>
     </>
   );
 };
