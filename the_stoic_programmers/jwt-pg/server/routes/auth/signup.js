@@ -19,7 +19,8 @@ module.exports = async function signUp(req, res) {
     }
 
     // 2. check if user exist (if user exist then throw error)
-    if (await isUserExist(email)) {
+    const prevUsers = await isUserExist(email);
+    if (prevUsers && prevUsers.rows.length > 0) {
       res.status(409).json({ msg: "User already exist." });
       return;
     }
@@ -30,14 +31,14 @@ module.exports = async function signUp(req, res) {
     const hashPassword = await bcrypt.hash(password, salt);
 
     // 4. Enter the new user inside our database
-    const user = await insertUser(name, email, hashPassword);
-    if (!user || user.rows.length === 0) {
+    const users = await insertUser(name, email, hashPassword);
+    if (!users || users.rows.length === 0) {
       res.status(400).json({ msg: "User not created." });
       return;
     }
 
     // 5. Generating our jwt token
-    const token = jwtToken(user.rows[0].user_id);
+    const token = jwtToken(users.rows[0].user_id);
     res.status(201).json({ token: `Bearer ${token}` });
   } catch (error) {
     console.log(error);
