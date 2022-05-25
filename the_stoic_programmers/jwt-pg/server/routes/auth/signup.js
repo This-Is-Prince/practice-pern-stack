@@ -7,16 +7,6 @@ module.exports = async function signUp(req, res) {
   try {
     // 1. destructure the req.body (name, email, password)
     const { name, email, password } = req.body;
-    if (!name) {
-      res.status(400).json({ msg: "Please send the name." });
-      return;
-    } else if (!email) {
-      res.status(400).json({ msg: "Please send the email." });
-      return;
-    } else if (!password) {
-      res.status(400).json({ msg: "Please send the password." });
-      return;
-    }
 
     // 2. check if user exist (if user exist then throw error)
     const prevUsers = await isUserExist(email);

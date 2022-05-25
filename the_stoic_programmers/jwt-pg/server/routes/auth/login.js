@@ -6,13 +6,6 @@ module.exports = async function logIn(req, res) {
   try {
     // 1. destructure the req.body
     const { email, password } = req.body;
-    if (!email) {
-      res.status(400).json({ msg: "Please send the email." });
-      return;
-    } else if (!password) {
-      res.status(400).json({ msg: "Please send the password." });
-      return;
-    }
 
     // 2. check if user doesn't exist (if not then we throw error)
     const users = await isUserExist(email);
