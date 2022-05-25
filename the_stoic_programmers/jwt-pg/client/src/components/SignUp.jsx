@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 
-const Signup = ({ isAuthenticated }) => {
+const Signup = ({ setAuth, isAuthenticated }) => {
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -12,10 +12,24 @@ const Signup = ({ isAuthenticated }) => {
       return { ...prevInputs, [e.target.name]: e.target.value };
     });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
-    setInputs({ email: "", password: "", name: "" });
+    try {
+      const { email, password, name } = inputs;
+      const body = { email, password, name };
+
+      const response = await fetch("http://localhost:5000/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const parseRes = await response.json();
+      localStorage.setItem("token", parseRes.token);
+      setAuth(true);
+    } catch (error) {
+      console.log(error);
+    }
+    // setInputs({ email: "", password: "", name: "" });
   };
   if (isAuthenticated) {
     return <Navigate to="/dashboard" />;
@@ -53,7 +67,6 @@ const Signup = ({ isAuthenticated }) => {
         />
         <button
           type="submit"
-          onClick={(e) => {}}
           className="bg-green-600 text-white px-8 py-2 rounded-md"
         >
           Submit
