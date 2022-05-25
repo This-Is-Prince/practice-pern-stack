@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const LogIn = ({ setAuth, isAuthenticated }) => {
   const [inputs, setInputs] = useState({ email: "", password: "" });
@@ -24,8 +25,10 @@ const LogIn = ({ setAuth, isAuthenticated }) => {
       if (response.ok) {
         localStorage.setItem("token", parseRes.token);
         setAuth(true);
+        toast.success("Login successfully!");
       } else {
         setAuth(false);
+        toast.error(parseRes.msg);
       }
       console.log(parseRes);
     } catch (error) {

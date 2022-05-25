@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 
-import {
-  BrowserRouter as Router,
-  Navigate,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import DashBoard from "./components/DashBoard";
 import SharedLayout from "./components/SharedLayout";
 import LogIn from "./components/Login";
 import Signup from "./components/Signup";
 import { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -41,30 +38,36 @@ const App = () => {
     setIsAuthenticated(value);
   };
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<SharedLayout />}>
-          <Route
-            path="/login"
-            element={
-              <LogIn isAuthenticated={isAuthenticated} setAuth={setAuth} />
-            }
-          />
-          <Route
-            path="/signup"
-            element={
-              <Signup isAuthenticated={isAuthenticated} setAuth={setAuth} />
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <DashBoard isAuthenticated={isAuthenticated} setAuth={setAuth} />
-            }
-          />
-        </Route>
-      </Routes>
-    </Router>
+    <>
+      <ToastContainer />
+      <Router>
+        <Routes>
+          <Route path="/" element={<SharedLayout />}>
+            <Route
+              path="/login"
+              element={
+                <LogIn isAuthenticated={isAuthenticated} setAuth={setAuth} />
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                <Signup isAuthenticated={isAuthenticated} setAuth={setAuth} />
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <DashBoard
+                  isAuthenticated={isAuthenticated}
+                  setAuth={setAuth}
+                />
+              }
+            />
+          </Route>
+        </Routes>
+      </Router>
+    </>
   );
 };
 
