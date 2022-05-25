@@ -4,12 +4,13 @@ const validInfo = require("../../middleware/validInfo");
 const login = require("./login");
 const signup = require("./signup");
 
-// Registering
+// SignUP
 auth.post("/signup", validInfo, signup);
+// LogIN
 auth.post("/login", validInfo, login);
+// Verify
 auth.get("/verify", authorization, (req, res) => {
   try {
-    console.log(req.user);
     res.status(200).json(true);
   } catch (error) {
     console.error(error);
